@@ -126,6 +126,10 @@ body {
   line-height: 1.5;
 }
 
+:focus-visible {
+  outline-color: var(--primary-variant);
+}
+
 ::-webkit-scrollbar {
   width: 8px;   /* sets vertical scrollbar width */
   height: 8px;  /* sets horizontal scrollbar width */
@@ -147,6 +151,8 @@ body {
 /*-----------------------------------*\
   #REUSED STYLE
 \*-----------------------------------*/
+
+/* a loading icon */
 .search-wrapper::before {
   content: "";
   position: absolute;
@@ -180,11 +186,126 @@ body {
 
 
 
+/* titles & headings */
+.title,
+.title-large,
+.heading {
+  font-weight: var(--weight-bold);
+  letter-spacing: 0.5px;
+}
+
+.title{ font-size: var(--fs-title); } 
+
+.title-large { font-size: var(--fs-title-lg); }
+
+.heading {
+  font-size: var(--fs-heading);
+  line-height: 1.2;
+  color: var(--white);
+}
+
+
+
+/* images & videos */
+.img-cover{
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+
+
+/* movie meta list & meta item */
+.meta-list {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 12px;
+
+}
+
+.meta-item{
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+
+
+/* buttons */
+.btn {
+  /* soecifies default layout, size, border-radius, padding, typography */
+  display: flex;
+  align-items: center;
+  gap: 12px;
+
+  max-width: max-content;
+  border-radius: var(--radius-8);
+  padding-block: 12px;
+  padding-inline: 20px 24px;
+
+  font-size: var(--fs-button);
+  font-weight: var(--weight-bold);
+  color: var(--white);
+
+  transition: var(--transition-short)
+}
+
+.card-badge {
+  background-color: var(--banner-background);
+  border-radius: var(--radius-4);
+  padding-inline: 6px;
+  font-size: var(--fs-label);
+  font-weight: var(--weight-bold);
+  color: var(--white);
+}
+
+
+
+/* for images & videos */
+/*
+ * if the image for an img element OR video for a video element fails to fetch
+ * what is the background image that should show instead
+ */
+.poster-box {
+  background-image: url("../images/poster-bg-icon.png");
+  aspect-ratio: 2/3;
+}
+
+.poster-box,
+.video-box {
+  background-position: center;
+  background-size: 50px;
+  background-repeat: no-repeat;
+  background-color: var(--banner-background);
+  border-radius: var(--radius-16);
+  overflow: hidden;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 /*-----------------------------------*\
   #HEADER
 \*-----------------------------------*/
+
+/* the header element */
 header {
   position: relative;
 
@@ -197,10 +318,15 @@ header {
   padding-block: 16px;
 }
 
+
+/* the logo */
 .header, .logo {
   margin-inline-end: auto;
 }
 
+
+
+/* the search button */
 .search-btn, .menu-btn {
   padding: 12px;
 }
@@ -216,6 +342,9 @@ header {
   opacity: 1;
 }
 
+
+
+/* the sidebar togglers */
 .menu-btn .menu,
 .menu-btn.active .close {
   display: block;
@@ -226,6 +355,9 @@ header {
   display: none;
 }
 
+
+
+/* the search-box UI */
 .search-box {
   position: absolute;
   top: 0;
@@ -248,6 +380,9 @@ header {
   display: flex;
 }
 
+
+
+/* the search field which is in the search box */
 .search-wrapper {
   position: relative;
   flex-grow: 1;
@@ -295,9 +430,128 @@ header {
 
 
 
+
+
+
+
+
+
+
+
+
+
 /*-----------------------------------*\
   #SIDEBAR
 \*-----------------------------------*/
+
+/*** position, width, visiblity & scroll interaction of the sidebar UI ***/
+.sidebar {
+  /*position*/
+  position: absolute;
+  top: 96px;
+  left: -340px;
+  z-index: 4;
+
+  /*width*/
+  width: 100%;
+  max-width: 340px;
+  overflow-y: overlay;
+
+  /*visibility*/
+  border-block-start: 1px solid var(--banner-background);
+  background-color: var(--background);
+  visibility: hidden;
+
+  transition: var(--transition-long);
+}
+
+.sidebar.active {
+  visibility: visible;
+  transform: translateX(340px);
+}
+
+.sidebar::-webkit-scrollbar-thumb {background-color: transparent}
+
+.sidebar:is(:hover, :focus-visible)::-webkit-scrollbar-thumb {background-color: var(--banner-background)}
+
+.sidebar::-webkit-scrollbar-button {height: 16px}
+
+
+
+/* layout, block padding of the side-bar UI */
+.sidebar-inner {
+  display: grid;
+  gap: 20px;
+  padding-block: 36px;
+}
+
+
+/* the sidebar-list & each link */
+.sidebar-list, .sidebar-footer {
+  padding-inline: 36px;
+}
+
+.sidebar-link {
+  color: var(--on-surface-variant);
+  transition: var(--transition-short);
+}
+
+.sidebar-link:is(:hover, :focus){
+  color: var(--on-background);
+}
+
+/* the sidebar-footer */
+.sidebar-footer {
+  margin-block-start: 16px;
+  border-block-start: 1px solid var(--banner-background);
+  padding-block-start: 25px;
+}
+
+.copyright {
+  color: var(--on-surface-variant);
+  margin-block-end: 20px;
+}
+
+.copyright a {
+  display: inline-block;
+}
+
+
+/* the sidebar overlay */
+.overlay {
+  position: fixed;
+  top: 96px;
+  left: 0;
+  bottom: 0;
+  z-index: 3;
+
+  opacity: 0;
+
+  width: 100%;
+  background-color: var(--background);
+
+  pointer-events: none;
+  transition: var(--transition-short);
+}
+
+.overlay.active {
+  opacity: 0.5;
+  pointer-events: all;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -309,8 +563,241 @@ header {
 
 
 
+/**
+  * HOME PAGE - PAGE CONTAINER
+  */
+
+/*
+ * styling the container of the page-content
+ * position, bg-color & pad the container of the page content.
+ * add a dark bottom overlay to the container
+ */
+.container {
+  position: relative;
+  z-index: 1;
+
+  height: calc(100vh - 96px);
+  overflow-y: overlay;
+
+  background-color:  var(--surface);
+  padding: 24px 20px 48px;
+  color: var(--on-surface);
+}
 
 
+.container::after {
+  /*content*/
+  content: "";
+
+  /*position*/
+  position: fixed;
+  left: 0;
+  bottom: 0;
+  z-index: 1;
+
+  /*size*/
+  width: 100%;
+  height: 150px;
+
+  /*background*/
+  background-image: linear-gradient(var(--bottom-overlay));
+  pointer-events: none;
+}
+
+
+
+
+
+
+
+
+/**
+  * HOME PAGE - BANNER SLIDES
+  */
+
+/*
+ * styling the container of the popular movie banner
+ * position, size(height), border-radius the container of the popular movies banner 
+ */ 
+.banner {
+  position: relative;
+
+  height: 700px;
+  overflow: hidden;
+
+  border-radius: var(--radius-24);
+}
+
+
+/*
+ * styling each movie slide container
+ * position each movie slide to be 20% out of viewport left handside with no opacity & visiblility.
+ * only the active movie slide would be seen at the viewport.
+ * each slide is 100% high & wide of its container (banner), 
+ * image in slide is also 100% high & wide via the "img-cover" reusable class,
+ * each slide have a dark overlay; this gives the image a dark contrast; 
+ * apart from the aesthetics of this technique,
+ * this ensure that no matter the image of the slides, text placed on it will be visible.
+ * 
+ */
+.slides .slide-item {
+  position: absolute;
+  top: 0;
+  left: 120%;
+
+  opacity: 0;
+  visibility: hidden;
+
+  width: 100%;
+  height: 100%;
+
+  background-color: var(--banner-background);
+  transition: opacity var(--transition-long);
+}
+
+.slides .slide-item.active {
+  left: 0;
+  opacity: 1;
+  visibility: visible;
+}
+
+.slides .slide-item::before {
+  content: "";
+  position: absolute;
+  inset: 0;   /* automatically set width & height to 100% */
+  background-image: linear-gradient(var(--banner-overlay));
+}
+
+
+/*
+ * styling each movie slide textual content;
+ * position the container of the textual content & set the text-color,
+ * webkit clamp the heading & description text to just 3 lines & 2 lines respectively,
+ * flex display the textual content meta-list,
+ * specify a background color for the watch now button.
+ */
+.banner-content {
+  position: absolute;
+  bottom: 206px;
+  left: 24px;
+  right: 24px;
+  z-index: 1;
+
+  color: var(--text-color)
+}
+
+.banner :is(.heading, .banner-text){
+  display: -webkit-box;
+  overflow: hidden;
+  -webkit-box-orient: vertical;
+}
+
+.banner .heading {
+  margin-block-end: 16px;
+  -webkit-line-clamp: 3;
+}
+
+.banner .genre { margin-block: 12px; }
+
+.banner-text {
+  margin-block-end: 24px;
+  -webkit-line-clamp: 2;
+}
+
+.banner .btn {
+  background-color: var(--primary);
+}
+
+.banner .btn:is(:hover, :focus-visible) {
+  box-shadow: var(--shadow-2);
+}
+
+
+
+
+
+/**
+  * HOME PAGE - BANNER SLIDES CONTROLLER
+  */
+
+/*
+ * style the slides controller container
+ * this container basically positions the slides controller UI
+ * position it to the bottom of its container
+ * add border-radius & padding
+ * for overflow in the x-direction, add scrollbar only when necessary
+ * prevent the container from being highlighted or selected by user
+ */
+.slides-controller{
+  position: absolute;
+  bottom: 20px;
+  left: 20px;
+  right: 0;
+
+  overflow-x: auto;
+
+  border-radius: var(--radius-16) 0 0 var(--radius-16);
+  padding: 4px 0 4px 4px;
+  user-select: none;
+
+}
+
+.slides-controller::-webkit-scrollbar {display: none}
+
+
+/* 
+ * style the slides controller inner container
+ * this basically adds flex layout to the slides controller UI
+ * initially each slide controller will shrink to fit availiable space
+ *
+ * add an after pseudoelement to simulate an additional flex item at the end,
+ * giving it a min-width of 12px. this adds a bit of spacing after all flex item.
+ */
+.slides-controller-inner {
+  display: flex;
+  gap: 12px;
+}
+
+.slides-controller-inner::after {
+  content: "";
+  min-width:12px;
+}
+
+
+/* 
+ * style the each slide controller
+ * set them to 100px width 
+ * remove the automatic shriking imposed on eaach slide controller by the flexbox container
+ * add a border radius to them
+ * all slide controller except the active slide controller will have a lower brightness
+
+ * note that and hidden overflow setting is needed for the border-radius setting to be visible.
+ * because via the "img-cover" class the img element in the button element is 100% wide & high.
+ * thus it is on-top of the button element OR 
+ * you can make the img element have the border-radius setting instead.
+ *
+ */
+.slides-controller .slide-item {
+  flex-shrink: 0;
+  width: 100px;
+  overflow: hidden;  /* this is needed for the border-radius settings to show */
+  border-radius: var(--radius-8);
+  filter: brightness(0.4);
+}
+
+.slides-controller .slide-item.active {
+  filter: brightness(1);
+  box-shadow: var(--shadow-1);
+}
+
+
+
+
+
+
+
+
+ 
 /*-----------------------------------*\
   #DETAIL PAGE
 \*-----------------------------------*/
