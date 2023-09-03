@@ -34,6 +34,23 @@ PAGE RESET STYLING
 
 
 
+  PAGE HEADER
+    - the page header constitute of the "site-logo, search-icon, nav-toggle-button"
+    - clicking the search icon displays a search-box UI the overlays the header.
+    - the search-box UI consists of a search input element & a "close-button" to hide the search box.
+
+
+    - clicking the nav-toggle-button hides & displays the page side bar.
+    - the nav-toggle-button has two icons. but just one will be visible at a time. 
+    - the icon that would be visible depends on if the page side-bar is hidden or display
+
+    
+    ####### BLOCK IMAGE OF THE HEADER #####
+
+    ###### IMAGE SHOWING THE LOGIC OF THE NAV BUTTON #####
+
+
+
 
 
 
@@ -72,3 +89,6 @@ CONCEPTS
 
 
 3. search bar loading icon
+
+
+4. blur overlay technique
