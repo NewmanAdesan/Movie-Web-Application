@@ -455,7 +455,7 @@ CONCEPTS
 
 
 
-. Default Content for img & video element
+8. Fallback Content for img & video element
 
 ```html
 
@@ -463,8 +463,6 @@ CONCEPTS
     <img src="./assets/images/slider-control.jpg" alt="Slide to Puss in Boots: The Last Wish" class="img-cover" loading="lazy" draggable="false">
 </button>
 ```
-
-
 
 ```css
 .poster-box {
@@ -482,6 +480,144 @@ CONCEPTS
   overflow: hidden;
 }
 ```
+
+
+
+
+
+
+
+
+
+
+/* ================== THE MOVIE LIST UI =================== */
+1. spacing before & after a flexbox
+```html
+<div class="slides-inner-container">
+
+    <!--movie card 1-->
+    <div class="movie-card">...</div>
+
+    <!--movie card 2-->
+    <div class="movie-card">...</div>
+
+    ...
+</div>
+```
+
+```css
+.slides-inner-container{
+  position: relative;
+  display: flex;
+  gap: 16px;
+}
+
+
+.slides-inner-container::before,
+.slides-inner-container::after {
+  content: "";
+  min-width: 12px;
+}
+```
+
+
+
+
+
+2. horizontal text clamp
+```html
+<h3 class="title">Puss in Boots: The Last Wish</h3>
+```
+
+```css
+
+.title {
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  margin-block: 8px 4px;
+}
+
+```
+
+
+
+
+
+3. several elements position to the same link
+
+```html
+<div class="movie-card">
+    <!--movie card image-->
+    <figure>...</figure>
+
+    <!--movie card title-->
+    <h3>...</h3>
+
+    <!--movie card rating/year-->
+    <div>...</div>
+
+    <!--movie card detail link-->
+    <a href="./detail.html" class="card-btn"></a>
+</div>
+```
+
+
+```css
+.movie-card .card-btn {
+  position: absolute;
+  inset: 0;
+}
+```
+
+
+
+
+
+
+
+
+
+
+/* ================== THE MOVIE DETAIL UI =================== */
+1. Backdrop Image
+
+```html
+<div class="backdrop-image" style="background-image: url('./assets/images/slider-banner.jpg');"></div>
+```
+
+
+```css
+.backdrop-image {
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: -1;
+
+  width: 100%;
+  height: 600px;
+
+  background-position: center;
+  background-size: contain;
+  background-repeat: no-repeat;
+}
+
+.backdrop-image::after {
+  content: "";
+  position:absolute;
+  inset: 0;
+  background-image: linear-gradient(hsla(250, 13%, 11%, 1), hsla(250, 13%, 11%, 0.9));
+}
+
+```
+
+
+
+
+
+
+
+
 
 
 

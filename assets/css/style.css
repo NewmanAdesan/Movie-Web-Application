@@ -152,13 +152,37 @@ body {
   #REUSED STYLE
 \*-----------------------------------*/
 
-/* a loading icon */
-.search-wrapper::before {
-  content: "";
-  position: absolute;
-  top: 14px;
-  right: 12px;
 
+/* a dark bottom overlay */
+.container::after,
+.search-modal::after {
+  /*content*/
+  content: "";
+
+  /*position*/
+  position: fixed;
+  left: 0;
+  bottom: 0;
+  z-index: 1;
+
+  /*size*/
+  width: 100%;
+  height: 150px;
+
+  /*background*/
+  background-image: linear-gradient(var(--bottom-overlay));
+  pointer-events: none;
+}
+
+
+
+/* a loading icon */
+/*
+ * this applies to the search functionality & the load more functionality
+ */
+.search-wrapper::before,
+.load-more::before {
+  content: "";
   display: none;
   width: 20px;
   height: 20px;
@@ -180,7 +204,14 @@ body {
   }
 }
 
-.search-wrapper.searching::before {
+.search-wrapper::before { 
+  position: absolute;
+  top: 14px;
+  right: 12px;
+}
+
+.search-wrapper.searching::before,
+.load-more.loading::before {
   display: block;
 }
 
@@ -202,6 +233,10 @@ body {
   font-size: var(--fs-heading);
   line-height: 1.2;
   color: var(--white);
+}
+
+.title-wrapper {
+  margin-block-end: 24px;
 }
 
 
@@ -233,7 +268,7 @@ body {
 
 
 
-/* buttons */
+/* buttons-like */
 .btn {
   /* soecifies default layout, size, border-radius, padding, typography */
   display: flex;
@@ -263,10 +298,10 @@ body {
 
 
 
-/* for images & videos */
+/* fallbacks images & videos */
 /*
  * if the image for an img element OR video for a video element fails to fetch
- * what is the background image that should show instead
+ * what is the background image that should show instead?
  */
 .poster-box {
   background-image: url("../images/poster-bg-icon.png");
@@ -274,7 +309,7 @@ body {
 }
 
 .poster-box,
-.video-box {
+.video-card {
   background-position: center;
   background-size: 50px;
   background-repeat: no-repeat;
@@ -282,6 +317,63 @@ body {
   border-radius: var(--radius-16);
   overflow: hidden;
 }
+
+.video-card {
+  flex-shrink: 0;
+  width: calc(100% - 40px);
+  max-width: 500px;
+
+  background-image: url("../images/video-bg-icon.png");
+  aspect-ratio: 16 / 9;
+}
+
+
+/* movie list slides */
+/*
+ * the slides-container specifies the scroll interaction * use padding to add a space before the scroll
+ * the slides-inner container specifies the flex display of the UI
+ */
+.slides-container{
+  overflow-x: overlay;
+  margin-inline: -20px;
+  padding-block-end: 16px;
+  margin-block-end: -16px;
+}
+
+.slides-container::-webkit-scrollbar-thumb {background-color: transparent;}
+.slides-container:is(:hover, :focus-visible)::-webkit-scrollbar-thumb {background-color: var(--banner-background);}
+
+
+.slides-inner-container{
+  position: relative;
+  display: flex;
+  gap: 16px;
+}
+
+.slides-inner-container::before,
+.slides-inner-container::after {
+  content: "";
+  min-width: 12px;
+}
+
+
+
+
+/* others */
+.span {
+  font-size: var(--fs-label);
+}
+
+.separator {
+  width: 4px;
+  height: 4px;
+
+  border-radius: var(--radius-4);
+  background-color: var(--white-alpha-20);
+
+}
+
+
 
 
 
@@ -585,26 +677,6 @@ header {
 }
 
 
-.container::after {
-  /*content*/
-  content: "";
-
-  /*position*/
-  position: fixed;
-  left: 0;
-  bottom: 0;
-  z-index: 1;
-
-  /*size*/
-  width: 100%;
-  height: 150px;
-
-  /*background*/
-  background-image: linear-gradient(var(--bottom-overlay));
-  pointer-events: none;
-}
-
-
 
 
 
@@ -612,7 +684,7 @@ header {
 
 
 /**
-  * HOME PAGE - BANNER SLIDES
+  * HOME PAGE BANNER - SLIDES
   */
 
 /*
@@ -717,7 +789,7 @@ header {
 
 
 /**
-  * HOME PAGE - BANNER SLIDES CONTROLLER
+  * HOME PAGE BANNER -  SLIDES CONTROLLER
   */
 
 /*
@@ -794,6 +866,46 @@ header {
 
 
 
+/**
+  * HOME PAGE MOVIE LIST
+  */
+
+/* 
+ * add a top padding to the movie-list section
+ * add a minimum width of 200px to the movie list flex item "movie-card"
+ * add a horizontal text clamp to the movie list title
+ *
+ */
+
+.movie-list {
+  padding-block-start: 32px;
+}
+
+.movie-card {
+  position: relative;
+  min-width: 200px;
+}
+
+.movie-card .card-banner { width: 100%; }
+
+.movie-card .title {
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  margin-block: 8px 4px;
+}
+
+.movie-card .meta-list {justify-content: space-between;}
+
+.movie-card .card-btn {
+  position: absolute;
+  inset: 0;
+}
+
+
+
+
+
 
 
 
@@ -801,6 +913,75 @@ header {
 /*-----------------------------------*\
   #DETAIL PAGE
 \*-----------------------------------*/
+
+/**
+  * MOVIE DETAIL UI
+  */
+/* 
+ * THE BACKDROP IMAGE
+ * underneath the movie detail ui is the backdrop image of the movie
+ * add a dark overlay over the image
+ *
+ */
+.backdrop-image {
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: -1;
+
+  width: 100%;
+  height: 600px;
+
+  background-position: center;
+  background-size: cover;
+  background-repeat: no-repeat;
+}
+
+.backdrop-image::before {
+  content: "";
+  position:absolute;
+  inset: 0;
+  background-image: linear-gradient(0deg, hsla(250, 13%, 11%, 1), hsla(250, 13%, 11%, 0.9));
+}
+
+
+
+/* 
+ * THE POSTER IMAGE
+ * set width to 100%
+ * set max-width to 300px
+ *
+ */
+.movie-detail .movie-poster {
+  width: 100%;
+  max-width: 300px;
+}
+
+
+
+/* 
+ * THE UI TEXT CONTENT
+ * add top & bottom margin to the heading box, genres box, detail list box
+ * change color of meta-list & genres box
+ * add flex display to the detail list item
+ * change color of detail list name & set its minimum width to 112px
+ */
+
+ .movie-detail .heading { margin-block: 24px 12px; }
+ .movie-detail :is(.meta-list, .genre) { color: var(--text-color); }
+ .movie-detail .genre { margin-block: 12px 16px; }
+ .movie-detail .detail-list { margin-block: 24px 32px; }
+ .movie-detail .list-item {
+    display: flex;
+    gap: 8px;
+    margin-block-end: 12px;
+ }
+ .movie-detail .list-name {
+    color: var(--text-color);
+    min-width: 112px;
+ }
+ 
+
 
 
 
@@ -810,6 +991,44 @@ header {
   #MOVIE LIST PAGE
 \*-----------------------------------*/
 
+/**
+  * MOVIE LIST UI
+  */
+/* 
+ * THE TITLE
+ * add a bottom margin to the title
+ * add grid display to the movie list, with a row & column gap, and auto filling the columns,
+ *
+ */
+.genre-list .title-wrapper { margin-block-end: 56px; }
+
+.grid-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  column-gap: 16px;
+  row-gap: 20px;
+}
+
+:is(.genre-list, .search-modal) :is(.movie-card, .card-banner) {width: 100%;}
+
+
+/* 
+ * THE LOAD MORE BUTTON
+ * add a left & right margin to center the button
+ * add a top & button margin
+ * add a background color
+ * add a background color on hover or focus
+ *
+ */
+
+ .load-more {
+    margin-inline: auto;
+    margin-block: 36px 60px;
+    background-color: var(--primary-variant);
+ }
+
+ .load-more:is(:hover, :focus-visible) { --primary-variant: hsla(349, 69%, 39%, 1); }
+
 
 
 
@@ -817,6 +1036,39 @@ header {
 /*-----------------------------------*\
   #SEARCH MODAL
 \*-----------------------------------*/
+/* 
+ * postion the search modal absolutely, on top of every thing else and just below the page header
+ * add scroll visiblity, background color & padding 
+ *  
+ *
+ */
+
+.search-modal {
+  position: fixed;
+  top: 80px;
+  left: 0;
+  bottom: 0;
+  z-index: 4;
+
+  display: none;
+
+  width: 100%;
+  overflow-y: overlay;
+
+  background-color: var(--surface);
+  padding: 50px 24px;
+}
+
+.search-modal.active {
+  display: block;
+}
+
+.search-modal .label {
+  margin-block-end: 8px;
+  color: var(--primary-variant);
+  font-weight: var(--weight-bold);
+}
+
 
 
 
