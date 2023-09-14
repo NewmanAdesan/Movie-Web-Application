@@ -60,6 +60,12 @@
   --transition-short: 250ms ease;
   --transition-long: 500ms ease;
 
+  /* header height */
+  --header-height: 80px;
+  @media screen and (min-width: 1200px) {
+    --header-height: 96px;
+  }
+
 }
 
 
@@ -540,12 +546,13 @@ header {
 .sidebar {
   /*position*/
   position: absolute;
-  top: 96px;
+  top: var(--header-height);
   left: -340px;
   z-index: 4;
 
   /*width*/
   width: 100%;
+  height: calc(100vh - var(--header-height));
   max-width: 340px;
   overflow-y: overlay;
 
@@ -612,7 +619,7 @@ header {
 /* the sidebar overlay */
 .overlay {
   position: fixed;
-  top: 96px;
+  top: var(--header-height);
   left: 0;
   bottom: 0;
   z-index: 3;
@@ -668,7 +675,7 @@ header {
   position: relative;
   z-index: 1;
 
-  height: calc(100vh - 96px);
+  height: calc(100vh - var(--header-height));
   overflow-y: overlay;
 
   background-color:  var(--surface);
@@ -1045,7 +1052,7 @@ header {
 
 .search-modal {
   position: fixed;
-  top: 80px;
+  top: var(--header-height);
   left: 0;
   bottom: 0;
   z-index: 4;
