@@ -35,21 +35,15 @@ export const createSideBarUI = function () {
             <!--- sidebar-list (genre) --->
             <div class="sidebar-list">
                 <p class="title">Genre</p>
-                <a href="./movie-list.html" class="sidebar-link" menu-close>Action</a>
-                <a href="./movie-list.html" class="sidebar-link" menu-close>Horror</a>
-                <a href="./movie-list.html" class="sidebar-link" menu-close>Comedy</a>
-                <a href="./movie-list.html" class="sidebar-link" menu-close>Adventure</a>
-                <a href="./movie-list.html" class="sidebar-link" menu-close>Drama</a>
-                <a href="./movie-list.html" class="sidebar-link" menu-close>Sci-Fi</a>
             </div>
 
 
             <!--- sidebar-list (language) --->
             <div class="sidebar-list">
                 <p class="title">Language</p>
-                <a href="./movie-list.html" class="sidebar-link" menu-close>English</a>
-                <a href="./movie-list.html" class="sidebar-link" menu-close>Hindi</a>
-                <a href="./movie-list.html" class="sidebar-link" menu-close>Bengali</a>
+                <a href="./movie-list.html" class="sidebar-link" menu-close onclick='getMovieList("with_original_language=en", "English")'>English</a>
+                <a href="./movie-list.html" class="sidebar-link" menu-close onclick='getMovieList("with_original_language=hi", "Hindi")'>Hindi</a>
+                <a href="./movie-list.html" class="sidebar-link" menu-close onclick='getMovieList("with_original_language=bn", "Bengali")'>Bengali</a>
             </div>
 
 
@@ -74,7 +68,7 @@ export const createSideBarUI = function () {
             sidebarLinkUI.classList.add("sidebar-link");
             sidebarLinkUI.setAttribute("href", "./movie-list.html");
             sidebarLinkUI.setAttribute("menu-close", "");
-            // sidebarLinkUI.setAttribute("onclick", `getMovieList("with_genres=${genreId}", "${genreName}")`)
+            sidebarLinkUI.setAttribute("onclick", `getMovieList("with_genres=${genreId}", "${genreName}")`)
             sidebarLinkUI.textContent = genreName;
             sidebarUI.querySelectorAll(".sidebar-list")[0].appendChild(sidebarLinkUI);
         }

@@ -639,6 +639,12 @@ const fetchDataFromServer = function (url, callback, optionalParameter) {
     fetch(url).then(response => response.json()).then(data => callback(data, optionalParameter));
 }
 
+
+
+fetchDataFromServer(api, function(data){
+  ...
+})
+
 ```
 
 
