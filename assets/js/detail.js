@@ -167,8 +167,13 @@ fetchDataFromServer(`https://api.themoviedb.org/3/movie/${movieId}?api_key=${api
      */
     document.querySelector("[page-content]").appendChild(movieDetailUI);
 
-
+    
+    // add recommendation movie slide to detail page
     addRecommendationMovieSlide();
+
+
+    // remove fetching icon from the page
+    document.querySelector("main").classList.remove("fetching");
 })
 
 

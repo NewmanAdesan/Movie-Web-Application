@@ -121,6 +121,10 @@ fetchDataFromServer(`https://api.themoviedb.org/3/discover/movie?api_key=${api_k
     document.querySelector("[page-content]").appendChild(movieListUI);
 
 
+    // remove fetching icon from the page
+    document.querySelector("main").classList.remove("fetching");
+
+
 
 })
 

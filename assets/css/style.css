@@ -63,7 +63,7 @@
   /* header height */
   --header-height: 80px;
   @media screen and (min-width: 1200px) {
-    --header-height: 96px;
+    --header-height: 104px;
   }
 
 }
@@ -187,7 +187,7 @@ body {
  * this applies to the search functionality & the load more functionality
  */
 .search-wrapper::before,
-.load-more::before {
+.load-more::before{
   content: "";
   display: none;
   width: 20px;
@@ -200,6 +200,43 @@ body {
   animation: loading 500ms linear infinite;
 }
 
+.search-wrapper::before { 
+  position: absolute;
+  top: 14px;
+  right: 12px;
+}
+
+main.fetching {
+  position: relative;
+}
+
+main.fetching::before {
+  content: "";
+  position:absolute;
+  inset: 0;
+  background-image: linear-gradient(var(--bottom-overlay));
+  z-index: 4;
+}
+
+main::after {
+  content: "";
+  position:fixed;
+  top: 150px;
+  left: 50vw;
+  z-index: 4;
+  
+  display: none;
+
+  width: 50px;
+  height: 50px;
+
+  border: 5px solid white;
+  border-radius: 25px;
+  border-inline-end-color: transparent;
+
+  animation: loading 700ms linear infinite;
+}
+
 @keyframes loading {
   0%{
     transform: rotate(0);
@@ -210,14 +247,9 @@ body {
   }
 }
 
-.search-wrapper::before { 
-  position: absolute;
-  top: 14px;
-  right: 12px;
-}
-
 .search-wrapper.searching::before,
-.load-more.loading::before {
+.load-more.loading::before,
+main.fetching::after {
   display: block;
 }
 
@@ -611,10 +643,6 @@ header {
   margin-block-end: 20px;
 }
 
-.copyright a {
-  display: inline-block;
-}
-
 
 /* the sidebar overlay */
 .overlay {
@@ -785,6 +813,8 @@ header {
 
 .banner .btn {
   background-color: var(--primary);
+  position: relative;
+  z-index: 0;
 }
 
 .banner .btn:is(:hover, :focus-visible) {
@@ -812,6 +842,7 @@ header {
   bottom: 20px;
   left: 20px;
   right: 0;
+  z-index: 1;
 
   overflow-x: auto;
 
@@ -1084,3 +1115,139 @@ header {
 /*-----------------------------------*\
   #MEDIA QUERIES
 \*-----------------------------------*/
+
+/**
+ * RESPONSIVENESS FOR LARGER THAN 575PX
+ * 1. setting maximum width for text content (banner-content & detail-content)
+ * 2. shift movie banner slides controller left side
+ */
+ @media screen and (min-width: 575px) {
+    /* HOME PAGE */
+    .banner-content{
+      right: auto;
+      max-width: 500px; 
+    }
+
+    .slides-controller {
+      left: calc(100% - 400px);
+    }
+
+
+    /* DETAIL PAGE */
+    .detail-content {
+      max-width: 750px;
+    }
+ }
+
+
+
+ /**
+  * RESPONSIVENESS FOR LARGER THAN 768PX
+  *
+  * VARIABLES
+  * 1. restyle the banner overlay
+  * 2. reset heading text font-size
+  *
+  * HOMEPAGE
+  * 1. hide all search-btn
+  * 2. reset search box styling & set width
+  * 3. reset inline padding for the container 
+  * 4. reset inline padding of sidebar list
+  * 5. reset movie banner height
+  * 6. center movie banner content
+  *
+  * DETAIL PAGE
+  * 1. set movie detail to be a flex box
+  * 2. stick the movie detail poster
+  * 2. set a border radius on the movie detail slider container
+  */
+  @media screen and (min-width: 768px) {
+
+    /* VARIABLES */
+    :root {
+      --banner-overlay: 90deg, hsl(220, 17%, 7%) 0%, hsla(220, 17%, 7%, 0) 100%;
+      --fs-heading: 5.4rem;
+    }
+
+
+    /* HOME PAGE */
+    .search-btn { display: none; }
+
+    .search-box {
+      all: unset;
+      display: block;
+      width: 340px;
+    }
+
+    .container { padding-inline: 24px;}
+
+    .banner { height: 500px; }
+
+    .banner-content {
+      bottom: 50%;
+      transform: translateY(50%);
+      left: 50px;
+    }
+
+
+    /* DETAIL PAGE */
+    .movie-detail {
+      display: flex;
+      align-items: flex-start;
+      gap: 40px;
+    }
+
+    .movie-detail .detail-box {flex-grow: 1;}
+
+    .movie-detail .movie-poster {
+      position: sticky;
+      top: 0;
+      flex-shrink: 0;
+    }
+
+    .movie-detail .slides-container{
+      margin-inline-start: 0;
+      border-radius: var(--radius-16) 0 0 var(--radius-16);
+    }
+
+    .movie-detail .slides-inner-container{ display: none;}
+ }
+
+
+
+ /**
+  * RESPONSIVENESS FOR LARGER THAN 1200PX
+  *
+  * 1. set more padding for the header
+  * 2. resize logo image
+  * 3. hide menu-btn & sidebar overlay
+  * 4. set main element to have a grid display
+  * 5. set sidebar to be visible
+  */
+
+@media screen and (min-width: 1200px) {
+  .header { padding: 28px 56px;}
+
+  .logo img { width: 106px }
+
+  .menu-btn,
+  .overlay { display: none; }
+
+  main {
+    display: grid;
+    grid-template-columns: 250px 1fr;
+  }
+
+  .sidebar {
+    position: static;
+    visibility: visible;
+    border-block-start: 0;
+  }
+  .sidebar.active { transform: none; }
+
+  .container, 
+  .backdrop-image { border-top-left-radius: var(--radius-36);}
+
+  .banner-content { left: 100px };
+
+}

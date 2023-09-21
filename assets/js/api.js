@@ -17,7 +17,7 @@ const imageBaseURL = "https://image.tmdb.org/t/p/";
  * @param {object} optionalParameter 
  */
 const fetchDataFromServer = function (url, callback, optionalParameter) {
-    fetch(url).then(response => response.json()).then(data => callback(data, optionalParameter));
+    fetch(url).then(response => response.json()).then(data => callback(data, optionalParameter))
 }
 
 

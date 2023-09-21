@@ -184,6 +184,10 @@ fetchDataFromServer(`https://api.themoviedb.org/3/genre/movie/list?api_key=${api
                 addMovieSlideUIToHomePage();
 
 
+                // remove fetching icon from the page
+                document.querySelector("main").classList.remove("fetching");
+
+
 
          }); 
     });

@@ -1,7 +1,7 @@
 "use strict";
 
-import { fetchDataFromServer } from "./api";
-import { createMovieCardUI } from "./movie-card";
+import { api_key, fetchDataFromServer } from "./api.js";
+import { createMovieCardUI } from "./movie-card.js";
 
 
 /***********************************************************************************************************************
@@ -37,7 +37,7 @@ export const createSeachModalUI = function() {
          * FETCH DATA: SECONDLY AFTER 500ms
          */
 
-        timeout = setTimeout(fetchDataFromServer(`TMDB-SEARCH-MOVIE-REQUEST`, function({results: movieList}){
+        timeout = setTimeout(fetchDataFromServer(`https://api.themoviedb.org/3/search/movie?api_key=${api_key}&query=${searchInput.value.trim()}&include_adult=false&language=en-US&page=1`, function({results: movieList}){
 
             // remove loading icon
             searchBox.classList.remove("searching");
@@ -46,7 +46,7 @@ export const createSeachModalUI = function() {
              * CREATE A SKELENTA SEARCH MODAL UI
              */
             const searchModalUI = document.createElement("div");
-            searchModalUI.classList.add("search-modal");
+            searchModalUI.classList.add("search-modal", "active");
             searchModalUI.innerHTML = ` 
                 <p class="label">Result For</p>
                 <h1 class="heading">${searchInput.value.trim()}</h1>
