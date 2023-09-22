@@ -1210,7 +1210,7 @@ header {
       border-radius: var(--radius-16) 0 0 var(--radius-16);
     }
 
-    .movie-detail .slides-inner-container{ display: none;}
+    .movie-detail .slides-inner-container::before{ display: none;}
  }
 
 
