@@ -25,6 +25,7 @@ export const createSeachModalUI = function() {
         // if search input was changed to have no value
         if (!searchInput.value.trim()){
             searchBox.classList.remove("searching");
+            if (document.querySelector(".search-modal")) document.querySelector(".search-modal").classList.remove("active");
             clearTimeout(timeout);
         }
 
