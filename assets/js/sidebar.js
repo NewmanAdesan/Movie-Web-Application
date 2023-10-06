@@ -45,17 +45,6 @@ export const createSideBarUI = function () {
                 <a href="./movie-list.html" class="sidebar-link" menu-close onclick='getMovieList("with_original_language=hi", "Hindi")'>Hindi</a>
                 <a href="./movie-list.html" class="sidebar-link" menu-close onclick='getMovieList("with_original_language=bn", "Bengali")'>Bengali</a>
             </div>
-
-
-            <!--- sidebar-footer -->
-            <div class="sidebar-footer">
-                <p class="copyright">
-                    Copyright 2023 
-                    <a href="https://youtube.com/@codewithsadee">tutored by codewithsadee</a>
-                    <a href="https://github.com/newmanadesan">built by newmanadesan</a>
-                </p>
-                <img src="./assets/images/tmdb-logo.svg" alt="the movie database logo" width="130" height="17">
-            </div>
         `
         navBar.appendChild(sidebarUI);
 
